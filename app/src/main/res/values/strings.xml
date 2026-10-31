@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SimplePlay</string>
+
+    <string name="setup_subtitle">1. Add your playlist   2. Pick channels   3. Watch</string>
+    <string name="playlist_label">Playlist URL (M3U)</string>
+    <string name="playlist_hint">http://provider.example/playlist.m3u</string>
+    <string name="epg_label">EPG URL (XMLTV, optional)</string>
+    <string name="epg_hint">Leave empty to use the one in the playlist</string>
+    <string name="next">Next: pick channels</string>
+    <string name="enter_url">Please enter a playlist URL.</string>
+    <string name="downloading">Downloading playlist…</string>
+    <string name="found_channels">Found %d channels.</string>
+    <string name="load_failed">Couldn\'t load the playlist: %s</string>
+
+    <string name="pick_title">Pick your channels</string>
+    <string name="search_hint">Search…</string>
+    <string name="select_all">Select all</string>
+    <string name="select_none">Clear</string>
+    <string name="done">Done</string>
+    <string name="selected_count">%1$d of %2$d selected · OK to tick / untick</string>
+    <string name="pick_one">Pick at least one channel.</string>
+
+    <string name="loading">Loading channels…</string>
+    <string name="no_channels">No channels picked yet.\nPress OK to open settings.</string>
+    <string name="channel_title">%1$d   %2$s</string>
+    <string name="now_line">%1$s – %2$s   %3$s</string>
+    <string name="next_line">Next  %1$s   %2$s</string>
+    <string name="no_epg">No programme info</string>
+    <string name="cant_play">Can\'t play this channel (%s)</string>
+    <string name="keys_hint">▲ ▼ zap    OK info / list    ◀ channels    ☰ settings</string>
+    <string name="channels">Channels</string>
+    <string name="settings">Settings</string>
+</resources>
