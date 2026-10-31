@@ -23,7 +23,25 @@ class Store(context: Context) {
         get() = prefs.getString("playlist_epg_url", "")!!
         set(v) = prefs.edit().putString("playlist_epg_url", v).apply()
 
-    val effectiveEpgUrl: String get() = epgUrl.ifBlank { playlistEpgUrl }
+    // Xtream Codes login (optional alternative to a playlist URL).
+    var xtreamServer: String
+        get() = prefs.getString("xtream_server", "")!!
+        set(v) = prefs.edit().putString("xtream_server", v).apply()
+
+    var xtreamUser: String
+        get() = prefs.getString("xtream_user", "")!!
+        set(v) = prefs.edit().putString("xtream_user", v).apply()
+
+    var xtreamPass: String
+        get() = prefs.getString("xtream_pass", "")!!
+        set(v) = prefs.edit().putString("xtream_pass", v).apply()
+
+    val usesXtream: Boolean get() = xtreamServer.isNotBlank()
+
+    val effectiveEpgUrl: String
+        get() = epgUrl
+            .ifBlank { if (usesXtream) Xtream.epgUrl(xtreamServer, xtreamUser, xtreamPass) else "" }
+            .ifBlank { playlistEpgUrl }
 
     var selected: Set<String>
         get() = prefs.getStringSet("selected", emptySet())!!.toSet()

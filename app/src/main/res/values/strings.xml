@@ -3,12 +3,17 @@
     <string name="app_name">SimplePlay</string>
 
     <string name="setup_subtitle">1. Add your playlist   2. Pick channels   3. Watch</string>
-    <string name="playlist_label">Playlist URL (M3U)</string>
+    <string name="playlist_label">Option A: playlist URL (M3U)</string>
+    <string name="xtream_label">Option B: Xtream Codes login</string>
+    <string name="xtream_server_hint">Server, e.g. http://provider.tv:8080</string>
+    <string name="xtream_user_hint">Username</string>
+    <string name="xtream_pass_hint">Password</string>
+    <string name="xtream_incomplete">Please fill in the Xtream username and password.</string>
     <string name="playlist_hint">http://provider.example/playlist.m3u</string>
     <string name="epg_label">EPG URL (XMLTV, optional)</string>
-    <string name="epg_hint">Leave empty to use the one in the playlist</string>
+    <string name="epg_hint">Leave empty to use the provider\'s guide</string>
     <string name="next">Next: pick channels</string>
-    <string name="enter_url">Please enter a playlist URL.</string>
+    <string name="enter_url">Enter a playlist URL or an Xtream login.</string>
     <string name="downloading">Downloading playlist…</string>
     <string name="found_channels">Found %d channels.</string>
     <string name="load_failed">Couldn\'t load the playlist: %s</string>

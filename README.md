@@ -2,7 +2,8 @@
 
 A very simple IPTV player for Android TV.
 
-1. **Add your playlist** – paste an M3U URL (and optionally an XMLTV EPG URL).
+1. **Add your playlist** – paste an M3U URL, *or* enter an Xtream Codes login
+   (server, username, password). An XMLTV EPG URL is optional.
 2. **Pick channels** – tick the ones you want (search box helps with big lists).
 3. **Watch** – the app opens straight into the last channel you watched.
 
@@ -16,10 +17,14 @@ A very simple IPTV player for Android TV.
 | ☰ Menu | Settings (or the *Settings* button at the bottom of the channel list) |
 | Back | Hide overlay · exit |
 
+## Logos
+
+Channel logos (`tvg-logo`) are shown in the info bar and the channel list.
+
 ## EPG
 
-XMLTV (`.xml` or `.xml.gz`). If you leave the EPG field empty, the `url-tvg` from the
-playlist header is used. Channels are matched by `tvg-id`, falling back to the channel
+XMLTV (`.xml` or `.xml.gz`). If you leave the EPG field empty, the provider's guide is
+used (Xtream `xmltv.php`, or the playlist's `url-tvg`). Channels are matched by `tvg-id`, falling back to the channel
 name. The guide is cached for 12 hours.
 
 ## Build

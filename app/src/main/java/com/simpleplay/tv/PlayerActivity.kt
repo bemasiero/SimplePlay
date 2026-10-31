@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.BaseAdapter
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -27,6 +28,7 @@ import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.ui.PlayerView
+import coil.load
 import java.util.Date
 import kotlin.concurrent.thread
 
@@ -44,6 +46,7 @@ class PlayerActivity : Activity() {
     private lateinit var playerView: PlayerView
     private lateinit var message: TextView
     private lateinit var banner: View
+    private lateinit var bannerLogo: ImageView
     private lateinit var bannerTitle: TextView
     private lateinit var bannerClock: TextView
     private lateinit var bannerStatus: TextView
@@ -74,6 +77,7 @@ class PlayerActivity : Activity() {
         playerView = findViewById(R.id.player)
         message = findViewById(R.id.message)
         banner = findViewById(R.id.banner)
+        bannerLogo = findViewById(R.id.banner_logo)
         bannerTitle = findViewById(R.id.banner_title)
         bannerClock = findViewById(R.id.banner_clock)
         bannerStatus = findViewById(R.id.banner_status)
@@ -275,6 +279,8 @@ class PlayerActivity : Activity() {
         val ch = channels.getOrNull(index) ?: return
         val now = System.currentTimeMillis()
         bannerTitle.text = getString(R.string.channel_title, index + 1, ch.name)
+        bannerLogo.visibility = if (ch.logo.isBlank()) View.GONE else View.VISIBLE
+        bannerLogo.load(ch.logo.ifBlank { null })
         bannerClock.text = hm(now)
         val (cur, next) = Epg.nowNext(ch)
         if (cur != null) {
@@ -322,6 +328,7 @@ class PlayerActivity : Activity() {
             val ch = channels[position]
             val current = position == index
             view.findViewById<TextView>(R.id.number).text = (position + 1).toString()
+            view.findViewById<ImageView>(R.id.logo).load(ch.logo.ifBlank { null })
             view.findViewById<TextView>(R.id.name).apply {
                 text = ch.name
                 setTextColor(if (current) 0xFF5EA8FF.toInt() else 0xFFFFFFFF.toInt())
