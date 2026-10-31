@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +18,18 @@ jobs:
           java-version: 17
       - uses: gradle/actions/setup-gradle@v4
       - run: ./gradlew assembleDebug
+      - run: cp app/build/outputs/apk/debug/app-debug.apk SimplePlay.apk
       - uses: actions/upload-artifact@v4
         with:
           name: SimplePlay-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: SimplePlay.apk
+      # Stable direct link for TVs:
+      # https://github.com/<owner>/<repo>/releases/latest/download/SimplePlay.apk
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: SimplePlay (latest build)
+          body: "Direct download: https://github.com/${{ github.repository }}/releases/latest/download/SimplePlay.apk"
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          files: SimplePlay.apk
