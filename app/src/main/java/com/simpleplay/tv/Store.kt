@@ -53,17 +53,28 @@ class Store(context: Context) {
 
     val playlistAgeMs: Long get() = System.currentTimeMillis() - playlistFile.lastModified()
 
+    /**
+     * Streams the playlist to disk, then parses it line by line keeping only live
+     * channels, and caches that (much smaller) list. Never holds the raw file in memory.
+     */
     fun downloadPlaylist(): List<Channel> {
-        val text = Http.readText(playlistUrl)
-        val result = M3u.parse(text)
-        if (result.channels.isEmpty()) throw IOException("No channels found. Is this an M3U playlist?")
-        playlistFile.writeText(text)
-        playlistEpgUrl = result.epgUrl
-        return result.channels
+        val raw = File(playlistFile.parentFile, "playlist.download")
+        try {
+            Http.gunzipIfNeeded(Http.openRaw(playlistUrl)).use { input ->
+                raw.outputStream().use { input.copyTo(it, 65_536) }
+            }
+            val result = raw.bufferedReader().use { M3u.parse(it) }
+            if (result.channels.isEmpty()) throw IOException("No live channels found. Is this an M3U playlist?")
+            M3u.write(playlistFile, result.channels, result.epgUrl)
+            playlistEpgUrl = result.epgUrl
+            return result.channels
+        } finally {
+            raw.delete()
+        }
     }
 
     fun cachedPlaylist(): List<Channel>? =
-        if (playlistFile.exists()) M3u.parse(playlistFile.readText()).channels else null
+        if (playlistFile.exists()) playlistFile.bufferedReader().use { M3u.parse(it).channels } else null
 
     fun myChannels(all: List<Channel>): List<Channel> {
         val sel = selected

@@ -46,6 +46,4 @@ object Http {
         return if (first == 0x1f && second == 0x8b) GZIPInputStream(b, 65_536) else b
     }
 
-    fun readText(url: String): String =
-        gunzipIfNeeded(openRaw(url)).use { it.readBytes().toString(Charsets.UTF_8) }
 }
